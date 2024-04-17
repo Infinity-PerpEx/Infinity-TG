@@ -3,7 +3,10 @@ import { Markup } from 'telegraf';
 import { ethers } from 'ethers';
 import * as middlewares from './middlewares.js';
 import * as api from './api/scanner.js';
-
+import bs58 from 'bs58';
+import { BASE_URL, BROKER_ID } from './dist/config.js';
+import { config } from 'dotenv';
+import { addAccessKey, registerAccount } from './dist/register.js';
 export async function startCommand(ctx) {
   try {
     const firstName = ctx.from.first_name || 'User';
@@ -42,6 +45,39 @@ export function helpCommand(ctx) {
   ctx.reply('You asked for help!');
 }
 
+export async function signInCommand(ctx) {
+  try {
+    console.log('privatekey',(config.PRIVATE_KEY))
+    const wallet = new ethers.Wallet("0xe59d6d216b67bd121d0c93213930d97ba844a0c0d9ac7411f7cbe24810d5df73");
+    const address = await wallet.getAddress();
+    console.log('Wallet address', address);
+    const getAccountRes = await fetch(`${BASE_URL}/v1/get_account?address=${address}&broker_id=${BROKER_ID}`);
+    const getAccountJson = await getAccountRes.json();
+    console.log('getAccountJson', JSON.stringify(getAccountJson, undefined, 2));
+    let accountId;
+    if (getAccountJson.success) {
+      accountId = getAccountJson.data.account_id;
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      accountId = await registerAccount(wallet);
+    }
+    let orderlyKey;
+    try {
+      orderlyKey = bs58.decode();
+    }  catch (err) {
+      orderlyKey = await addAccessKey(wallet);
+      const orderlyKeyEncoded = bs58.encode(orderlyKey);
+      console.log('orderlyKey', orderlyKeyEncoded);
+      console.log('===== PASTE THIS KEY INTO YOUR .env file as ORDERLY_SECRET=<your_key> =====');
+      ctx.reply(`Orderly Key: ${orderlyKeyEncoded}`);
+    }
+    ctx.reply(`accountId: ${accountId}`);
+  } catch (error) {
+    console.error('Error:', error.message);
+    ctx.reply('Error signing in. Please try again later.');
+  }
+}
+
 export function walletCommand(ctx) {
   const wallet = ethers.Wallet.createRandom();
 
@@ -52,9 +88,9 @@ export function walletCommand(ctx) {
 
   // Prepare the reply message with wallet details
   const walletInfoMessage = `
-    👝👝👝👝👝👝👝👝👝👝
+  👜👜👜👜👜👜👜👜👜👜
   
-    ✨ NEW WALLET CREATED  ✨
+    NEW WALLET CREATED
   
     This is your new wallet:
     
@@ -68,11 +104,12 @@ export function walletCommand(ctx) {
     ${mnemonicPhrase}
   
     🚀 Keep your private key and mnemonic phrase safe!
+
     💼 You can also add it to any Ethereum wallet.
   
-    ✨ Enjoy secure crypto transactions! ✨
+    Enjoy secure crypto transactions!
   
-    👝👝👝👝👝👝👝👝👝👝
+  👜👜👜👜👜👜👜👜👜👜
   `;
   
   const walletManagementKeyboard = Markup.inlineKeyboard([
