@@ -14,6 +14,8 @@ bot.command('start', commands.startCommand);
 
 bot.action('wallet', commands.walletCommand);
 
+bot.action('sign-in', commands.signInCommand);
+
 bot.help(commands.helpCommand);
 
 
