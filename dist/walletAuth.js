@@ -2,6 +2,7 @@ import { getPublicKeyAsync, utils } from '@noble/ed25519';
 import { config } from 'dotenv';
 import { encodeBase58, ethers } from 'ethers';
 import { webcrypto } from 'node:crypto';
+import { supabase } from '../supabaseClient';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 if (!globalThis.crypto)
@@ -32,9 +33,14 @@ const BASE_URL = 'https://testnet-api-evm.orderly.org';
 const BROKER_ID = 'woofi_dex';
 const CHAIN_ID = 421614;
 config();
+
+
+
 async function createOrderlyKey() {
     const wallet = new ethers.Wallet(process.env.PRIVATE_KEY);
+    const walletAddress = wallet.getAddress();
     const privateKey = utils.randomPrivateKey();
+    const mnemonicPhrase = wallet.mnemonic.phrase;
     const orderlyKey = `ed25519:${encodeBase58(await getPublicKeyAsync(privateKey))}`;
     const timestamp = Date.now();
     const addKeyMessage = {
@@ -61,6 +67,25 @@ async function createOrderlyKey() {
     });
     const keyJson = await keyRes.json();
     console.log('addAccessKey', keyJson);
+    await storeData(walletAddress, privateKey, orderlyKey);
+}
+async function storeData(walletAddress, privateKey, orderlyKey, mnemonicPhrase) {
+    try {
+        const { data, error } = await supabase
+            .from("Users")
+            .upsert([
+                { wallet_address: walletAddress, private_key: privateKey, orderly_key: orderlyKey, mnemonic_phrase: mnemonicPhrase }
+            ])
+            .select();
+
+        if (error) {
+            console.error("Error storing", error.message);
+        } else {
+            console.log("Successful", data)
+        }
+    } catch (error) {
+        console.error("Failed", error.message);
+    }
 }
 createOrderlyKey();
 //# sourceMappingURL=walletAuth.js.map

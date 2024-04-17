@@ -10,13 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.6.8",
-    "ethers": "^6.9.1",
-    "nodemon": "^3.1.0",
-    "telegraf": "^4.15.3",
     "@noble/ed25519": "^2.1.0",
     "@orderly.network/types": "^1.2.0",
+    "@supabase/supabase-js": "^2.41.1",
+    "axios": "^1.6.8",
     "bs58": "^5.0.0",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "ethers": "^6.9.1",
+    "nodemon": "^3.1.0",
+    "telegraf": "^4.15.3"
   }
 }
