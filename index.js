@@ -1,8 +1,8 @@
 // index.js
-const { Telegraf } = require('telegraf');
-const config = require('./config');
-const commands = require('./commands');
-const middlewares = require('./middlewares');
+import { Telegraf } from 'telegraf';
+import config from './config.js';
+import * as commands from './commands.js';
+import * as middlewares from './middlewares.js';
 
 const bot = new Telegraf(config.TELEGRAM_BOT_TOKEN);
 
