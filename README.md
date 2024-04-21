@@ -1,4 +1,4 @@
-<a><img src="blob:https://web.telegram.org/d303edb1-87fc-42ed-86fb-d638e239adc8" alt="Desktop-1" border="0" /></a>
+<a><img src="https://github.com/Infinity-PerpEx/Infinity-TG/blob/main/infinity.jpg" alt="Infinity" border="0" /></a>
 
 # Telegram Bot  ( Trade Smarter With Infinity )
 
