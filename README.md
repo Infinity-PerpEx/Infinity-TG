@@ -9,21 +9,21 @@ documentation! This  showcases the Telegram bot functionalities. It provides inf
 
 
 ## Getting Started 
-- Step 1.
+### Step 1.
 After you must have cloned this reposity, You can start by installing all the necessary packages.
 - Head over to the CLI on your PC and run
 
 ```bash
 npm install
 ```
-- Step 2.
+### Step 2.
  Start the bot by running this command.
 - Head over to the CLI on your PC and run
 
 ```bash
 node index.js
 ```
-- Step 3.
+### Step 3.
  Head over to the bot
 Test out Infinity Trading Bot [here](http://t.me/infinityperpbot/).
 
