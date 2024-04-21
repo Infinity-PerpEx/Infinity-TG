@@ -44,13 +44,14 @@ async function main() {
     // don't do this in prod. You would normally have to get `quote_tick` from here and send respective price:
     // https://orderly.network/docs/build-on-evm/evm-api/restful-api/public/get-exchange-information
     Math.round(bids[0].price * 0.98), 0.01, accountId, orderlyKey);
+    //function createOrder(symbol, orderType, side, orderPrice, orderQuantity, orderlyAccountId, orderlyKey)
     const orders = await getOpenOrders(accountId, orderlyKey);
     for (const order of orders) {
         if (order.status === 'NEW') {
             await cancelOrder(String(order.order_id), order.symbol, accountId, orderlyKey);
         }
     }
-    await createAlgoOrder({
+  {/*  await createAlgoOrder({
         symbol,
         algo_type: 'STOP',
         quantity: 0.01,
@@ -65,7 +66,7 @@ async function main() {
         if (order.algo_status === 'NEW') {
             await cancelAlgoOrder(String(order.algo_order_id), order.symbol, accountId, orderlyKey);
         }
-    }
+    }*/}
 }
 export function getAccountId(userAddress, brokerId) {
     const abicoder = AbiCoder.defaultAbiCoder();

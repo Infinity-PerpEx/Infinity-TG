@@ -15,6 +15,8 @@ export async function createOrder(symbol, orderType, side, orderPrice, orderQuan
     });
     const json = await res.json();
     console.log('createOrder:', JSON.stringify(json, undefined, 2));
+     // Return the response json object to the caller
+     return json;
 }
 export async function createAlgoOrder(body, orderlyAccountId, orderlyKey) {
     console.log('creating algo order', JSON.stringify(body, undefined, 2));
