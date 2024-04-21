@@ -35,10 +35,10 @@ Test out Infinity Trading Bot [here](http://t.me/infinityperpbot/).
 - Sign In (Creating Your Orderly Key)
 -  Deposit (Using Orderly Faucet)
 - Long/Short (Start Trading)
-- LONG/SHORT MARKET ORDER (/long <leverage> <Ordersize>) (/short <leverage> <Ordersize>)
-- LONG/SHORT LIMIT ORDER (/long <price> <leverage> <Ordersize>) (/short <price> <leverage> <Ordersize>)
+- LONG/SHORT MARKET ORDER (/long leverage Ordersize) (/short leverage Ordersize)
+- LONG/SHORT LIMIT ORDER (/long price leverage Ordersize) (/short price leverage Ordersize)
 - Active Trades (Check Trades)
-- Close Position (/close <orderId>
+- Close Position (/close orderId)
   
 Revolutionize your trading experience with our intuitive Telegram bot. Stay ahead of the market trends and trade with confidence.
 
